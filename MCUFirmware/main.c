@@ -15,13 +15,10 @@
 #include <util/delay.h>
 
 #include "commands.h"
-#include "ATMega2560_addresses.h"
+#include "ATMega32u4.h"
 
 void InitializePins(void);
-void InitializeSerialPort(void);
 void StartedBlink(void);
-inline byte RecieveSerialByte(void);
-inline void SendSerialByte(byte data);
 inline void LedCommand(void);
 inline void SensorCommand(void);
 inline void DriveCommand(void);
@@ -60,13 +57,6 @@ void InitializePins(void)
     LEFT_MOTOR_SPEED_DDR |= (1 << LEFT_MOTOR_SPEED_PIN);
 }
 
-void InitializeSerialPort(void)
-{
-    UBRR0H = (byte)(BAUD_RATE >> 8);
-    UBRR0L = (byte)BAUD_RATE;
-    UCSR0B = (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0);
-}
-
 void StartedBlink(void)
 {
     for (int i = 0; i < 3; ++i)
@@ -84,24 +74,6 @@ void StartedBlink(void)
         LED5_PORT &= ~(1 << LED5_PIN);
         _delay_ms(200);
     }
-}
-
-inline byte RecieveSerialByte(void)
-{
-    while (!(UCSR0A & (1 << RXC0)))
-    {
-    }
-
-    return UDR0;
-}
-
-inline void SendSerialByte(byte data)
-{
-    while (!(UCSR0A & ( 1 << UDRE0)))
-    {
-    }
-    
-    UDR0 = data;
 }
 
 inline void LedCommand(void)
@@ -272,9 +244,9 @@ inline void DriveCommand(void)
     }
 }
 
-ISR (USART0_RX_vect)
+ISR (SERIAL_INTERRUPT)
 {
-    byte val = UDR0;
+    byte val = RecieveSerialByte();
     switch (val)
     {
         case LED_COMMAND:

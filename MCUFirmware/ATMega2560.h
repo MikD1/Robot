@@ -1,14 +1,19 @@
 /*
-* ATMega2560_addresses.h
+* ATMega2560.h
 *
 * Created: 27.08.2014 18:47:15
 * Author: Mikhail Doshevsky <m.doshevsky@gmail.com>
 */
 
-#ifndef ATMEGA2560_ADDRESSES_H_
-#define ATMEGA2560_ADDRESSES_H_
+#ifndef ATMEGA2560_H_
+#define ATMEGA2560_H_
 
 void InitializePWM(void);
+void InitializeSerialPort(void);
+inline unsigned char RecieveSerialByte(void);
+inline void SendSerialByte(unsigned char data);
+
+#define SERIAL_INTERRUPT USART0_RX_vect
 
 // GPIO 52
 #define LED1_DDR _SFR_IO8(0x04)
@@ -95,5 +100,30 @@ void InitializePWM(void)
     TCCR4B |= (1 << CS40);
 }
 
+void InitializeSerialPort(void)
+{
+    UBRR0H = (byte)(BAUD_RATE >> 8);
+    UBRR0L = (byte)BAUD_RATE;
+    UCSR0B = (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0);
+}
 
-#endif /* ATMEGA2560_ADDRESSES_H_ */
+inline unsigned char RecieveSerialByte(void)
+{
+    while (!(UCSR0A & (1 << RXC0)))
+    {
+    }
+
+    return UDR0;
+}
+
+inline void SendSerialByte(unsigned char data)
+{
+    while (!(UCSR0A & ( 1 << UDRE0)))
+    {
+    }
+    
+    UDR0 = data;
+}
+
+
+#endif /* ATMEGA2560_H_ */
