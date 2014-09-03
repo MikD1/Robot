@@ -1,0 +1,17 @@
+﻿<Window x:Class="RobotControlPanel.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Robot Control Panel" Height="350" Width="525"
+        KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        <Button x:Name="ConnectButton" Content="Connect" Width="100" Height="20"
+                Click="ConnectButton_Click"/>
+        
+        <TextBlock x:Name="ConnectLabel" Grid.Row="1" Text="Disconnected" Margin="5"/>
+    </Grid>
+</Window>
