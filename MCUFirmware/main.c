@@ -51,10 +51,10 @@ void InitializePins(void)
     SENSOR4_DDR &= ~(1 << SENSOR4_PIN);
     SENSOR5_DDR &= ~(1 << SENSOR5_PIN);
     
-    RIGHT_MOTOR_DIRECTION_DDR |= (1 << RIGHT_MOTOR_DIRECTION_PIN);
-    LEFT_MOTOR_DIRECTION_DDR |= (1 << LEFT_MOTOR_DIRECTION_PIN);
-    RIGHT_MOTOR_SPEED_DDR |= (1 << RIGHT_MOTOR_SPEED_PIN);
-    LEFT_MOTOR_SPEED_DDR |= (1 << LEFT_MOTOR_SPEED_PIN);
+    M2_DIRECTION_DDR |= (1 << M2_DIRECTION_PIN);
+    M1_DIRECTION_DDR |= (1 << M1_DIRECTION_PIN);
+    M2_SPEED_DDR |= (1 << M2_SPEED_PIN);
+    M1_SPEED_DDR |= (1 << M1_SPEED_PIN);
 }
 
 void StartedBlink(void)
@@ -211,36 +211,36 @@ inline void DriveCommand(void)
     byte arg = RecieveSerialByte();
     
     byte motorsSpeed = arg & 0b11111100;
-    byte leftMotorDirection = arg & 0b00000010;
-    byte rightMotorDirection = arg & 0b00000001;
+    byte M1Direction = arg & 0b00000010;
+    byte M2Direction = arg & 0b00000001;
     
-    if (leftMotorDirection)
+    if (M1Direction)
     {
-        LEFT_MOTOR_DIRECTION_PORT |= (1 << LEFT_MOTOR_DIRECTION_PIN);
+        M1_DIRECTION_PORT |= (1 << M1_DIRECTION_PIN);
     }
     else
     {
-        LEFT_MOTOR_DIRECTION_PORT &= ~(1 << LEFT_MOTOR_DIRECTION_PIN);
+        M1_DIRECTION_PORT &= ~(1 << M1_DIRECTION_PIN);
     }
     
-    if (rightMotorDirection)
+    if (M2Direction)
     {
-        RIGHT_MOTOR_DIRECTION_PORT |= (1 << RIGHT_MOTOR_DIRECTION_PIN);
+        M2_DIRECTION_PORT |= (1 << M2_DIRECTION_PIN);
     }
     else
     {
-        RIGHT_MOTOR_DIRECTION_PORT &= ~(1 << RIGHT_MOTOR_DIRECTION_PIN);
+        M2_DIRECTION_PORT &= ~(1 << M2_DIRECTION_PIN);
     }
     
     if (!motorsSpeed)
     {
-        LEFT_MOTOR_SPEED_VALUE = 0;
-        RIGHT_MOTOR_SPEED_VALUE = 0;
+        M1_SPEED_VALUE = 0;
+        M2_SPEED_VALUE = 0;
     }
     else
     {
-        LEFT_MOTOR_SPEED_VALUE = 255 - 63 + motorsSpeed;
-        RIGHT_MOTOR_SPEED_VALUE = 255 - 63 + motorsSpeed;
+        M1_SPEED_VALUE = 255 - 63 + motorsSpeed;
+        M2_SPEED_VALUE = 255 - 63 + motorsSpeed;
     }
 }
 

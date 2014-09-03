@@ -23,7 +23,7 @@
 #define DRIVE_COMMAND 0x22
 // arguments:
 // bits 7:2 - motors speed
-// bit 1 - left motor direction
-// bit 0 - right motor direction
+// bit 1 - M1 direction
+// bit 0 - M2 direction
 
 #endif /* COMMANDS_H_ */
