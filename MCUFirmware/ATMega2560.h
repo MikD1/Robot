@@ -57,11 +57,11 @@ inline void SendSerialByte(unsigned char data);
 #define SENSOR5_PORT _SFR_IO8(0x06)
 #define SENSOR5_PIN 3
 
-// GPIO 1
+// GPIO 4
 #define M1_DIRECTION_DDR DDRG
 #define M1_DIRECTION_PORT PORTG
-#define M1_DIRECTION_PIN PINE5
-// GPIO 16
+#define M1_DIRECTION_PIN PING5
+// GPIO 7
 #define M2_DIRECTION_DDR DDRH
 #define M2_DIRECTION_PORT PORTH
 #define M2_DIRECTION_PIN PINH4
@@ -69,7 +69,7 @@ inline void SendSerialByte(unsigned char data);
 #define M1_SPEED_DDR DDRE
 #define M1_SPEED_PORT PORTE
 #define M1_SPEED_PIN PINE3
-// GPIO 15
+// GPIO 6
 #define M2_SPEED_DDR DDRH
 #define M2_SPEED_PORT PORTH
 #define M2_SPEED_PIN PINH3

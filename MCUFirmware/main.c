@@ -15,7 +15,7 @@
 #include <util/delay.h>
 
 #include "commands.h"
-#include "ATMega32u4.h"
+#include "ATMega2560.h"
 
 void InitializePins(void);
 void StartedBlink(void);
