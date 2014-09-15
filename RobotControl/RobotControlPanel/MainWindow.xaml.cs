@@ -15,13 +15,6 @@ namespace RobotControlPanel
             _robot.Disconnected += RobotOnDisconnected;
         }
 
-        private void Reversal()
-        {
-            _robot.Drive(new DriveMode { Direction = DriveDirection.CCW, Speed = 63 });
-            Thread.Sleep(350);
-            _robot.Stop();
-        }
-
         private void RobotOnConnected()
         {
             ConnectLabel.Text = "Connected";
@@ -66,7 +59,7 @@ namespace RobotControlPanel
                         break;
 
                     case System.Windows.Input.Key.Space:
-                        Reversal();
+                        _robot.Shot();
                         break;
                 }
             }

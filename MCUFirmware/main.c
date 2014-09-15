@@ -55,6 +55,9 @@ void InitializePins(void)
     M1_DIRECTION_DDR |= (1 << M1_DIRECTION_PIN);
     M2_SPEED_DDR |= (1 << M2_SPEED_PIN);
     M1_SPEED_DDR |= (1 << M1_SPEED_PIN);
+    
+    M2_DIRECTION_B_DDR |= (1 << M2_DIRECTION_B_PIN);
+    M1_DIRECTION_B_DDR |= (1 << M1_DIRECTION_B_PIN);
 }
 
 void StartedBlink(void)
@@ -217,25 +220,34 @@ inline void DriveCommand(void)
     if (M1Direction)
     {
         M1_DIRECTION_PORT |= (1 << M1_DIRECTION_PIN);
+        M1_DIRECTION_B_PORT &= ~(1 << M1_DIRECTION_B_PIN);
     }
     else
     {
         M1_DIRECTION_PORT &= ~(1 << M1_DIRECTION_PIN);
+        M1_DIRECTION_B_PORT |= (1 << M1_DIRECTION_B_PIN);
     }
     
     if (M2Direction)
     {
         M2_DIRECTION_PORT |= (1 << M2_DIRECTION_PIN);
+        M2_DIRECTION_B_PORT &= ~(1 << M2_DIRECTION_B_PIN);
     }
     else
     {
         M2_DIRECTION_PORT &= ~(1 << M2_DIRECTION_PIN);
+        M2_DIRECTION_B_PORT |= (1 << M2_DIRECTION_B_PIN);
     }
     
     if (!motorsSpeed)
     {
         M1_SPEED_VALUE = 0;
         M2_SPEED_VALUE = 0;
+        
+        M1_DIRECTION_PORT &= ~(1 << M1_DIRECTION_PIN);
+        M1_DIRECTION_B_PORT &= ~(1 << M1_DIRECTION_B_PIN);
+        M2_DIRECTION_PORT &= ~(1 << M2_DIRECTION_PIN);
+        M2_DIRECTION_B_PORT &= ~(1 << M2_DIRECTION_B_PIN);
     }
     else
     {

@@ -13,6 +13,8 @@ namespace Core
         
         void Drive(DriveMode mode);
         void Stop();
+
+        void Shot();
     }
 
     public enum DriveDirection

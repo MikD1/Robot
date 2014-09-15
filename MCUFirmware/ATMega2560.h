@@ -77,6 +77,17 @@ inline void SendSerialByte(unsigned char data);
 #define M1_SPEED_VALUE OCR3A
 #define M2_SPEED_VALUE OCR4A
 
+
+// GPIO 3
+#define M1_DIRECTION_B_DDR DDRE
+#define M1_DIRECTION_B_PORT PORTE
+#define M1_DIRECTION_B_PIN PINE5
+// GPIO 2
+#define M2_DIRECTION_B_DDR DDRE
+#define M2_DIRECTION_B_PORT PORTE
+#define M2_DIRECTION_B_PIN PINE4
+
+
 void InitializePWM(void)
 {
     TCCR3A |= (1 << COM3A1);

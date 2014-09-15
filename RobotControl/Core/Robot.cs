@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO.Ports;
+using System.Threading;
 
 namespace Core
 {
@@ -31,25 +32,32 @@ namespace Core
             switch (mode.Direction)
             {
                 case DriveDirection.Forward:
-                    ExecuteCommand(0x22, 255);
-                    break;
-
-                case DriveDirection.Back:
                     ExecuteCommand(0x22, 252);
                     break;
 
+                case DriveDirection.Back:
+                    ExecuteCommand(0x22, 255);
+                    break;
+
                 case DriveDirection.CW:
-                    ExecuteCommand(0x22, 253);
+                    ExecuteCommand(0x22, 217);
                     break;
 
                 case DriveDirection.CCW:
-                    ExecuteCommand(0x22, 254);
+                    ExecuteCommand(0x22, 218);
                     break;
             }
         }
         public void Stop()
         {
             ExecuteCommand(0x22, 0);
+        }
+
+        public void Shot()
+        {
+            ExecuteCommand(0x20, 7);
+            Thread.Sleep(200);
+            ExecuteCommand(0x20, 6);
         }
 
         public void Dispose()
